@@ -1,21 +1,8 @@
 CREATE TABLE departments (
-	dept_no INT PRIMARY KEY,
+	dept_no VARCHAR(30) PRIMARY KEY,
 	dept_name VARCHAR(30)
 );
----------------------------
-CREATE TABLE dept_emp (
-	emp_no INT FOREIGN KEY REFERENCES employees(emp_no),
-	dept_no INT FOREIGN KEY REFERENCES departments(dept_no),
-	from_date TIMESTAMP,
-	to_date TIMESTAMP
-);
----------------------------
-CREATE TABLE dept_manager (
-	dept_no INT FOREIGN KEY REFERENCES departments(dept_no),
-	emp_no INT FOREIGN KEY REFERENCES employees(emp_no),
-	from_date TIMESTAMP,
-	to_date TIMESTAMP
-);
+SELECT * FROM departments;
 ---------------------------
 CREATE TABLE employees (
 	emp_no INT PRIMARY KEY,
@@ -25,17 +12,70 @@ CREATE TABLE employees (
 	gender VARCHAR(30),
 	hire_date TIMESTAMP
 );
+SELECT * FROM employees;
+---------------------------
+CREATE TABLE dept_manager (
+	dept_no VARCHAR(30),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no),
+	emp_no INT,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	from_date TIMESTAMP,
+	to_date TIMESTAMP
+);
+SELECT * FROM dept_manager;
+---------------------------
+CREATE TABLE dept_emp (
+	emp_no INT,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	dept_no VARCHAR(30),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no),
+	from_date TIMESTAMP,
+	to_date TIMESTAMP
+);
+SELECT * FROM dept_emp;
 ---------------------------
 CREATE TABLE salaries (
-	emp_no INT FOREIGN KEY REFERENCES employees(emp_no),
+	emp_no INT,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
 	salary INT,
 	from_date TIMESTAMP,
 	to_date TIMESTAMP
 );
+SELECT * FROM salaries;
 ---------------------------
 CREATE TABLE titles (
-	emp_no INT FOREIGN KEY REFERENCES employees(emp_no),
+	emp_no INT,
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
 	title VARCHAR(30),
 	from_date TIMESTAMP,
 	to_date TIMESTAMP
 );
+SELECT * FROM titles;
+---------------------------
+DROP TABLE dept_emp;
+DROP TABLE salaries;
+DROP TABLE titles;
+DROP TABLE dept_manager;
+DROP TABLE departments;
+DROP TABLE employees;
+---------------------------
+
+---------Analysis----------
+--1--
+SELECT e.emp_no, e.last_name, e.first_name, e.gender, s.salary
+FROM employees as e
+JOIN salaries as s ON e.emp_no=s.emp_no;
+
+--2--
+SELECT emp_no, first_name, last_name, hire_date::date FROM employees
+WHERE EXTRACT(year FROM hire_date) = 1986;
+
+--3--
+SELECT d.dept_no, d.dept_name, dm.emp_no, e.last_name, e.first_name, dm.from_date::date, dm.to_date::date
+FROM departments as d
+JOIN dept_manager as dm ON d.dept_no=dm.dept_no
+JOIN employees as e ON e.emp_no=dm.emp_no;
+
+--4--
+
+
