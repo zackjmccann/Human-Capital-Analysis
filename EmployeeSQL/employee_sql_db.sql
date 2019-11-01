@@ -77,5 +77,36 @@ JOIN dept_manager as dm ON d.dept_no=dm.dept_no
 JOIN employees as e ON e.emp_no=dm.emp_no;
 
 --4--
+SELECT de.emp_no, e.last_name, e.first_name, d.dept_name
+FROM dept_emp as de
+JOIN employees as e ON de.emp_no=e.emp_no
+JOIN departments as d ON d.dept_no=de.dept_no;
+
+--5--
+SELECT first_name, last_name FROM employees
+WHERE first_name = 'Hercules' and last_name LIKE 'B%';
+
+--6--
+SELECT de.emp_no, e.last_name, e.first_name, d.dept_name
+FROM dept_emp as de
+JOIN employees as e ON de.emp_no=e.emp_no
+JOIN departments as d ON d.dept_no=de.dept_no
+WHERE d.dept_name = 'Sales';
+
+--7--
+SELECT de.emp_no, e.last_name, e.first_name, d.dept_name
+FROM dept_emp as de
+JOIN employees as e ON de.emp_no=e.emp_no
+JOIN departments as d ON d.dept_no=de.dept_no
+WHERE d.dept_name = 'Sales' OR d.dept_name = 'Development';
+
+--8--
+
+
+
+
+
+
+
 
 
