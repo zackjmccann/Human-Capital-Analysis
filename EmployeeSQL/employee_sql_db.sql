@@ -52,13 +52,6 @@ CREATE TABLE titles (
 );
 SELECT * FROM titles;
 ---------------------------
-DROP TABLE dept_emp;
-DROP TABLE salaries;
-DROP TABLE titles;
-DROP TABLE dept_manager;
-DROP TABLE departments;
-DROP TABLE employees;
----------------------------
 
 ---------Analysis----------
 --1--
@@ -101,8 +94,10 @@ JOIN departments as d ON d.dept_no=de.dept_no
 WHERE d.dept_name = 'Sales' OR d.dept_name = 'Development';
 
 --8--
-
-
+SELECT DISTINCT last_name, COUNT(last_name)
+FROM employees
+GROUP BY last_name
+ORDER BY COUNT(last_name) DESC;
 
 
 
