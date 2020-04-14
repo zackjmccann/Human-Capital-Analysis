@@ -1,3 +1,2 @@
-# SQL-Challenge
-
-### Authored by _Zack McCann_
+### Analysis of company personnel and evaluations of human resource records
+#### Analysis is done entirely in SQL
